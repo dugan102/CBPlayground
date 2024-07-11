@@ -40,7 +40,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List(bluetoothViewModel.peripheralNames, id: \.self) { peripheral in
-                Text(peripheral)
+                NavigationLink(peripheral, destination: PracticeView())
                 
             }
             .navigationTitle("Peripherals")
