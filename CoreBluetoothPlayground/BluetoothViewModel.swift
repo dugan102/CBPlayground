@@ -61,6 +61,12 @@ class BluetoothViewModel: NSObject, ObservableObject {
                 return
             }
             peripheral.writeValue(data, for: characteristic, type: .withResponse)
+        
+            if characteristic.properties.contains(.write) || characteristic.properties.contains(.writeWithoutResponse) {
+                // Write with response
+                peripheral.writeValue(data, for: characteristic, type: .withResponse)
+            }
+        
         }
     
 }

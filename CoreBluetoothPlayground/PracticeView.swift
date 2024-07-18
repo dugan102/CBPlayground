@@ -14,7 +14,7 @@ struct PracticeView: View {
         
         Button(action: {
                         if let peripheral = bluetoothViewModel.connectedPeripherals.first {
-                            let data = Data([1]) // Sending a single byte with value 1
+                            let data = Data([0x01]) // Sending a single byte with value 1
                             bluetoothViewModel.sendData(data, to: peripheral)
                         }
                     }) {
