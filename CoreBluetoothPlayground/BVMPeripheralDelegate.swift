@@ -23,6 +23,10 @@ extension BluetoothViewModel: CBPeripheralDelegate {
             }
     }
     
+    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: (any Error)?) {
+        print(characteristic.value ?? "no value")
+    }
+    
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         print("a characterisitc was discovered")
         if let error = error {
@@ -34,6 +38,8 @@ extension BluetoothViewModel: CBPeripheralDelegate {
                 
                 for characteristic in characteristics {
                     print(characteristic)
+                    print(characteristic.properties)
+                    
                     if characteristicUUIDs.contains(characteristic.uuid) {
                         yourCharacteristic = characteristic
                         // Optionally, notify that the characteristic is found and ready for data transmission

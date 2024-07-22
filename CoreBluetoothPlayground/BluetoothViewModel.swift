@@ -60,11 +60,19 @@ class BluetoothViewModel: NSObject, ObservableObject {
                 print("Characteristic not found")
                 return
             }
-            peripheral.writeValue(data, for: characteristic, type: .withResponse)
         
-            if characteristic.properties.contains(.write) || characteristic.properties.contains(.writeWithoutResponse) {
+            if characteristic.properties.contains(.write) {
                 // Write with response
+                print("Attempting write with response")
                 peripheral.writeValue(data, for: characteristic, type: .withResponse)
+                print("sent", data)
+            }
+        
+            if characteristic.properties.contains(.writeWithoutResponse) {
+                print("attempting write without response")
+                peripheral.writeValue(data, for: characteristic, type: .withResponse)
+                peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
+                print("sent", data)
             }
         
         }
