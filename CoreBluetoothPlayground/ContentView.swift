@@ -8,35 +8,31 @@
 import SwiftUI
 import CoreBluetooth
 
-
-
 struct ContentView: View {
     @ObservedObject private var bluetoothViewModel = BluetoothViewModel()
-    
+    @State private var navigateToPracticeView = false
+    @State private var selectedPeripheral: CBPeripheral?
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             List(bluetoothViewModel.peripherals, id: \.self) { peripheral in
-                ZStack {
-                    if let peripheralName = peripheral.name {
-                        NavigationLink(
-                            peripheral.identifier.uuidString + ": " + peripheralName,
-                            destination: PracticeView(bluetoothViewModel: bluetoothViewModel)
-                        )
-                    } else {
-                        NavigationLink(
-                            peripheral.identifier.uuidString,
-                            destination: PracticeView(bluetoothViewModel: bluetoothViewModel)
-                        )
+                Button(action: {
+                    if bluetoothViewModel.tryConnecting(peripheral: peripheral) {
+                        selectedPeripheral = peripheral
+                        navigateToPracticeView = true
                     }
-                    Button(action: {
-                        bluetoothViewModel.tryConnecting(peripheral: peripheral)
-                    }, label: {
-                        EmptyView()
-                    })
-                    .simultaneousGesture(TapGesture())
+                }) {
+                    if let peripheralName = peripheral.name {
+                        Text(peripheral.identifier.uuidString + ": " + peripheralName).foregroundColor(.white)
+                    } else {
+                        Text(peripheral.identifier.uuidString).foregroundColor(.white)
+                    }
                 }
             }
             .navigationTitle("Peripherals")
+            .navigationDestination(isPresented: $navigateToPracticeView) {
+                PracticeView(bluetoothViewModel: bluetoothViewModel)
+            }
         }
     }
 }

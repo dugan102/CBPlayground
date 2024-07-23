@@ -55,22 +55,23 @@ class BluetoothViewModel: NSObject, ObservableObject {
     }
     
     
+    func sendData(buttonNumber: UInt8, speed: UInt8, to peripheral: CBPeripheral) {
+            // Create a Data object with the button number and speed
+            let dataToSend = Data([buttonNumber, speed])
+            
+            // Call the existing sendData function with the created Data object
+            sendData(dataToSend, to: peripheral)
+        }
+    
+    
     func sendData(_ data: Data, to peripheral: CBPeripheral) {
             guard let characteristic = yourCharacteristic else {
                 print("Characteristic not found")
                 return
             }
         
-            if characteristic.properties.contains(.write) {
-                // Write with response
-                print("Attempting write with response")
-                peripheral.writeValue(data, for: characteristic, type: .withResponse)
-                print("sent", data)
-            }
-        
             if characteristic.properties.contains(.writeWithoutResponse) {
                 print("attempting write without response")
-                peripheral.writeValue(data, for: characteristic, type: .withResponse)
                 peripheral.writeValue(data, for: characteristic, type: .withoutResponse)
                 print("sent", data)
             }
