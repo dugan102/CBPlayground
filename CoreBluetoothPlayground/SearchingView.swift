@@ -9,14 +9,38 @@ import SwiftUI
 import CoreBluetooth
 
 struct SearchingView: View {
-    private var centralManager: CBCentralManager!
-    private var selectedPeripheral: CBPeripheral?
+    @ObservedObject private var bluetoothViewModel = BluetoothViewModel()
+    @State private var navigateToPracticeView = false
+    @State private var selectedPeripheral: CBPeripheral?
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            List(bluetoothViewModel.peripherals, id: \.self) { peripheral in
+                Button(action: {
+                    if bluetoothViewModel.tryConnecting(peripheral: peripheral) {
+                        selectedPeripheral = peripheral
+                        navigateToPracticeView = true
+                    }
+                }) {
+                    if let peripheralName = peripheral.name {
+                        Text(peripheralName).foregroundColor(.white)
+                    } else {
+                        Text(peripheral.identifier.uuidString).foregroundColor(.white)
+                    }
+                }
+            }
+            .navigationTitle("Connect to a device: ")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $navigateToPracticeView) {
+                PracticeView(bluetoothViewModel: bluetoothViewModel)
+            }
+        }
     }
-    
 }
 
-#Preview {
-    SearchingView()
+struct SearchingView_Previews: PreviewProvider {
+    static var previews: some View {
+        SearchingView()
+    }
 }
+

@@ -76,7 +76,7 @@ struct PracticeView: View {
                 Spacer()
             }
             
-            Text("Speed: ").foregroundColor(.black)
+            Spacer().frame(height: 10)
             
             HStack {
                 Spacer()

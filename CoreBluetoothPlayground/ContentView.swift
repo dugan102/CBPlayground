@@ -23,13 +23,14 @@ struct ContentView: View {
                     }
                 }) {
                     if let peripheralName = peripheral.name {
-                        Text(peripheral.identifier.uuidString + ": " + peripheralName).foregroundColor(.white)
+                        Text(peripheralName).foregroundColor(.white)
                     } else {
                         Text(peripheral.identifier.uuidString).foregroundColor(.white)
                     }
                 }
             }
-            .navigationTitle("Peripherals")
+            .navigationTitle("Weclome!")
+            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(isPresented: $navigateToPracticeView) {
                 PracticeView(bluetoothViewModel: bluetoothViewModel)
             }
