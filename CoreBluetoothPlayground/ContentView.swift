@@ -14,26 +14,12 @@ struct ContentView: View {
     @State private var selectedPeripheral: CBPeripheral?
 
     var body: some View {
-        NavigationStack {
-            List(bluetoothViewModel.peripherals, id: \.self) { peripheral in
-                Button(action: {
-                    if bluetoothViewModel.tryConnecting(peripheral: peripheral) {
-                        selectedPeripheral = peripheral
-                        navigateToPracticeView = true
-                    }
-                }) {
-                    if let peripheralName = peripheral.name {
-                        Text(peripheralName).foregroundColor(.white)
-                    } else {
-                        Text(peripheral.identifier.uuidString).foregroundColor(.white)
-                    }
-                }
-            }
-            .navigationTitle("Weclome!")
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(isPresented: $navigateToPracticeView) {
-                PracticeView(bluetoothViewModel: bluetoothViewModel)
-            }
+        VStack {
+            
+            Text("Welcome!")
+                            .font(.system(size: 30, weight: .bold))
+            SearchingView()
+
         }
     }
 }
