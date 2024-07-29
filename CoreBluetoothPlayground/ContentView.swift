@@ -18,7 +18,27 @@ struct ContentView: View {
             
             Text("Welcome!")
                             .font(.system(size: 30, weight: .bold))
-            SearchingView()
+            NavigationStack {
+                List(bluetoothViewModel.peripherals, id: \.self) { peripheral in
+                    Button(action: {
+                        if bluetoothViewModel.tryConnecting(peripheral: peripheral) {
+                            selectedPeripheral = peripheral
+                            navigateToPracticeView = true
+                        }
+                    }) {
+                        if let peripheralName = peripheral.name {
+                            Text(peripheralName).foregroundColor(.white)
+                        } else {
+                            Text(peripheral.identifier.uuidString).foregroundColor(.white)
+                        }
+                    }
+                }
+                .navigationTitle("Connect to a device: ")
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationDestination(isPresented: $navigateToPracticeView) {
+                    PracticeView(bluetoothViewModel: bluetoothViewModel)
+                }
+            }
 
         }
     }
