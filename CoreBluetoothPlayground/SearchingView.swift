@@ -8,6 +8,10 @@
 import SwiftUI
 import CoreBluetooth
 
+//desired improvement in searchingView: When a peripheral is clicked on, if the peripheral is already connected then go to practice view, else refresh. Furthermore if a peripheral is connected then display a checkmark on its nav link.
+
+
+
 struct SearchingView: View {
     @ObservedObject private var bluetoothViewModel = BluetoothViewModel()
     @State private var navigateToPracticeView = false
@@ -43,4 +47,3 @@ struct SearchingView_Previews: PreviewProvider {
         SearchingView()
     }
 }
-
