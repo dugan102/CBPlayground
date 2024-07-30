@@ -27,6 +27,7 @@ extension BluetoothViewModel: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         peripheralStatus = .connected
+        //add peripheral to connected peripherals
         
         peripheral.delegate = self
         peripheral.discoverServices(serviceUUIDs)
@@ -36,6 +37,7 @@ extension BluetoothViewModel: CBCentralManagerDelegate {
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
         peripheralStatus = .disconnected
+        //remove peripheral from connected peripherals
     }
     
     func centralManager(_ central: CBCentralManager, didFailToConnect peripheral: CBPeripheral, error: Error?) {
