@@ -19,6 +19,7 @@ struct ContentView: View {
             Text("Welcome!")
                             .font(.system(size: 30, weight: .bold))
             NavigationStack {
+                //navigation stack lists peripherals that meet certain specifications that are specified in methods of BVM
                 List(bluetoothViewModel.peripherals, id: \.self) { peripheral in
                     Button(action: {
                         if bluetoothViewModel.tryConnecting(peripheral: peripheral) {
