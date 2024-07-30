@@ -27,10 +27,16 @@ struct ContentView: View {
                             navigateToPracticeView = true
                         }
                     }) {
+                        HStack {
                         if let peripheralName = peripheral.name {
-                            Text(peripheralName).foregroundColor(.white)
-                        } else {
-                            Text(peripheral.identifier.uuidString).foregroundColor(.white)
+                                Text(peripheralName).foregroundColor(.white)
+                        }
+                        else {
+                                Text(peripheral.identifier.uuidString).foregroundColor(.white)
+                        }
+                            
+                            
+                            }
                         }
                     }
                 }
@@ -43,7 +49,7 @@ struct ContentView: View {
 
         }
     }
-}
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
